@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: statement-loader
+  #  jpa:
+  #    hibernate:
+  #      ddl-auto: update
+  ##    database-platform: org.hibernate.dialect.MySQL80Dialect
+  #    open-in-view: false
+  #    properties:
+  #      hibernates:
+  #        jdbc:
+  #          time_zone: UTC
+  output:
+    ansi:
+      enabled: always
+  profiles:
+    active:

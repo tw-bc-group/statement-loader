@@ -1,0 +1,28 @@
+server:
+  port: 8081
+
+spring:
+  batch:
+    job:
+      enabled: false
+    initialize-schema: never
+  profiles: dev
+  mvc:
+    throw-exception-if-no-handler-found: true
+#  datasource:
+#    url: jdbc:mysql://localhost:3306/statement?autoReconnect=true&useSSL=false&useLegacyDatetimeCode=false
+#    username: root
+#    password: root
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    platform: mysql
+
+
+# for multiple data sources, different data source for different loader
+statement:
+  datasource:
+    mysql:
+      url: jdbc:mysql://localhost:3306/statement?autoReconnect=true&useSSL=false&useLegacyDatetimeCode=false
+      username: root
+      password: root
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      platform: mysql
