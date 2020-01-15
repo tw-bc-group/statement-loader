@@ -59,9 +59,12 @@ public class BatchConfiguration extends DefaultBatchConfigurer {
     @Bean(name = "MysqlReader")
     @JobScope
     public JdbcCursorItemReader<JsonObject> mysqlReader(
+            @Value("#{jobParameters['startTime']}") Long startTime,
+            @Value("#{jobParameters['endTime']}") Long endTime,
             @Value("#{jobParameters['dataSourceName']}") String dataSourceName,
             @Value("#{jobParameters['tableName']}") String tableName) {
-        final String querySql = "SELECT * FROM " + tableName;
+
+        final String querySql = String.format("SELECT * FROM %s t WHERE t.timestamp >= %d AND t.timestamp < %d", tableName, startTime, endTime);
 
         JdbcCursorItemReader<JsonObject> mysqlReader = new JdbcCursorItemReader<>();
         mysqlReader.setDataSource(dataSourceRegistry.getByName(dataSourceName));

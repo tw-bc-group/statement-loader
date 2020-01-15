@@ -12,10 +12,7 @@ import org.springframework.batch.core.repository.JobRestartException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
 
 import java.io.File;
@@ -36,13 +33,18 @@ public class LoadingApi {
         this.jobLauncher = jobLauncher;
     }
 
-    @GetMapping("/payment")
+    @GetMapping("/account-center")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<StreamingResponseBody> list() throws JobParametersInvalidException, JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException, FileNotFoundException {
+    public ResponseEntity<StreamingResponseBody> loadAccountCenterData(@RequestParam("startTime") Long startTime,
+                                                                       @RequestParam("endTime") Long endTime)
+            throws JobParametersInvalidException, JobExecutionAlreadyRunningException,
+            JobRestartException, JobInstanceAlreadyCompleteException, FileNotFoundException {
         final JobParameters jobParameters = new JobParametersBuilder()
-                .addLong("time", System.currentTimeMillis())
                 .addString("dataSourceName", "AccountCenterDataSource")
                 .addString("tableName", "account_records")
+                .addLong("startTime", startTime)
+                .addLong("endTime", endTime)
+                .addLong("executeTime", System.currentTimeMillis())
                 .toJobParameters();
         jobLauncher.run(job, jobParameters);
 
