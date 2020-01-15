@@ -5,24 +5,24 @@ spring:
   batch:
     job:
       enabled: false
-    initialize-schema: never
+    initialize-schema: always
   profiles: dev
   mvc:
     throw-exception-if-no-handler-found: true
-#  datasource:
-#    url: jdbc:mysql://localhost:3306/statement?autoReconnect=true&useSSL=false&useLegacyDatetimeCode=false
-#    username: root
-#    password: root
-#    driver-class-name: com.mysql.cj.jdbc.Driver
-#    platform: mysql
+  datasource:
+    url: jdbc:mysql://localhost:3307/loader?autoReconnect=true&allowPublicKeyRetrieval=true&useSSL=false&useLegacyDatetimeCode=false
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    platform: all
 
 
 # for multiple data sources, different data source for different loader
-statement:
-  datasource:
-    mysql:
-      url: jdbc:mysql://localhost:3306/statement?autoReconnect=true&useSSL=false&useLegacyDatetimeCode=false
+loader:
+  account-center:
+    datasource:
+      url: jdbc:mysql://localhost:3306/statement?autoReconnect=true&allowPublicKeyRetrieval=true&useSSL=false&useLegacyDatetimeCode=falseallowPublicKeyRetrieval=true
       username: root
       password: root
       driver-class-name: com.mysql.cj.jdbc.Driver
-      platform: mysql
+      platform: all

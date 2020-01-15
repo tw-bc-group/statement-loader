@@ -1,4 +1,4 @@
-package com.thoughtworks.blockchain.statementloader;
+package com.thoughtworks.blockchain.statementloader.api;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.Job;
@@ -11,10 +11,16 @@ import org.springframework.batch.core.repository.JobInstanceAlreadyCompleteExcep
 import org.springframework.batch.core.repository.JobRestartException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 
 @Slf4j
 @RestController
@@ -26,16 +32,35 @@ public class LoadingApi {
 
     @Autowired
     public LoadingApi(Job job, JobLauncher jobLauncher) {
-        this.jobLauncher = jobLauncher;
         this.job = job;
+        this.jobLauncher = jobLauncher;
     }
 
     @GetMapping("/batch")
     @ResponseStatus(HttpStatus.OK)
-    public void list() throws JobParametersInvalidException, JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException {
+    public ResponseEntity<StreamingResponseBody> list() throws JobParametersInvalidException, JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException, FileNotFoundException {
         final JobParameters jobParameters = new JobParametersBuilder()
                 .addLong("time", System.currentTimeMillis())
                 .toJobParameters();
         jobLauncher.run(job, jobParameters);
+
+        final FileInputStream file = new FileInputStream(new File("output/outputData.txt"));
+
+        StreamingResponseBody body = outputStream -> {
+            int n;
+            while ((n = file.available()) > 0) {
+                byte[] buffer = new byte[n];
+                final int result = file.read(buffer);
+                if (result == -1) break;
+                outputStream.write(buffer);
+                outputStream.flush();
+                try {
+                    Thread.sleep(3);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        return new ResponseEntity<>(body, HttpStatus.OK);
     }
 }

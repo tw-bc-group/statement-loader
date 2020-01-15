@@ -1,6 +1,5 @@
 package com.thoughtworks.blockchain.statementloader.datasource;
 
-import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -10,20 +9,19 @@ import org.springframework.context.annotation.Primary;
 import javax.sql.DataSource;
 
 @Configuration
-public class MysqlDataSourceConfiguration {
+public class LoaderDataSourceConfiguration {
 
     @Bean
     @Primary
-    @ConfigurationProperties("statement.datasource.mysql")
-    public DataSourceProperties dataSourceProperties() {
+    @ConfigurationProperties("spring.datasource")
+    public DataSourceProperties loaderDataSourceProperties() {
         return new DataSourceProperties();
     }
 
-    @Bean(name = "Mysql")
-    public DataSource mysqlDataSource() {
-        return dataSourceProperties()
-                .initializeDataSourceBuilder()
-                .type(HikariDataSource.class)
-                .build();
+    @Bean(name = "LoaderDataSource")
+    @Primary
+    public DataSource loaderDataSource() {
+        return loaderDataSourceProperties().initializeDataSourceBuilder().build();
     }
+
 }
