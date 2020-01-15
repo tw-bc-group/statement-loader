@@ -24,7 +24,7 @@ import java.io.FileNotFoundException;
 
 @Slf4j
 @RestController
-@RequestMapping("/account_records")
+@RequestMapping("/batch-data")
 public class LoadingApi {
 
     private final Job job;
@@ -36,11 +36,13 @@ public class LoadingApi {
         this.jobLauncher = jobLauncher;
     }
 
-    @GetMapping("/batch")
+    @GetMapping("/payment")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<StreamingResponseBody> list() throws JobParametersInvalidException, JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException, FileNotFoundException {
         final JobParameters jobParameters = new JobParametersBuilder()
                 .addLong("time", System.currentTimeMillis())
+                .addString("dataSourceName", "AccountCenterDataSource")
+                .addString("tableName", "account_records")
                 .toJobParameters();
         jobLauncher.run(job, jobParameters);
 
