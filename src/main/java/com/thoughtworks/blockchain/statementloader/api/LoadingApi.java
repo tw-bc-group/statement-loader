@@ -1,7 +1,7 @@
 package com.thoughtworks.blockchain.statementloader.api;
 
+import com.thoughtworks.blockchain.statementloader.loader.LoaderJobService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobParameters;
 import org.springframework.batch.core.JobParametersBuilder;
 import org.springframework.batch.core.JobParametersInvalidException;
@@ -10,7 +10,6 @@ import org.springframework.batch.core.repository.JobExecutionAlreadyRunningExcep
 import org.springframework.batch.core.repository.JobInstanceAlreadyCompleteException;
 import org.springframework.batch.core.repository.JobRestartException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,17 +24,14 @@ import java.io.FileNotFoundException;
 @RequestMapping("/batch-data")
 public class LoadingApi {
 
-    private final Job job;
-    private final Job restJob;
     private final JobLauncher jobLauncher;
+    private final LoaderJobService jobService;
 
     @Autowired
-    public LoadingApi(@Qualifier("MysqlJob") Job job,
-                      @Qualifier("RestJob") Job restJob,
-                      JobLauncher jobLauncher) {
-        this.job = job;
-        this.restJob = restJob;
+    public LoadingApi(JobLauncher jobLauncher,
+                      LoaderJobService jobService) {
         this.jobLauncher = jobLauncher;
+        this.jobService = jobService;
     }
 
     @GetMapping("/bridge")
@@ -46,7 +42,7 @@ public class LoadingApi {
         final JobParameters jobParameters = new JobParametersBuilder()
                 .addLong("executeTime", System.currentTimeMillis())
                 .toJobParameters();
-        jobLauncher.run(restJob, jobParameters);
+        jobLauncher.run(jobService.getByBeanName("RestJob"), jobParameters);
 
         final FileInputStream file = new FileInputStream(new File("output/outputDataRest.txt"));
 
@@ -81,7 +77,7 @@ public class LoadingApi {
                 .addLong("endTime", endTime)
                 .addLong("executeTime", System.currentTimeMillis())
                 .toJobParameters();
-        jobLauncher.run(job, jobParameters);
+        jobLauncher.run(jobService.getByBeanName("MysqlJob"), jobParameters);
 
         final FileInputStream file = new FileInputStream(new File("output/outputData.txt"));
 

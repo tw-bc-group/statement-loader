@@ -1,7 +1,7 @@
 package com.thoughtworks.blockchain.statementloader.loader.mysql;
 
 import com.google.gson.JsonObject;
-import com.thoughtworks.blockchain.statementloader.datasource.DataSourceRegistry;
+import com.thoughtworks.blockchain.statementloader.datasource.OriginDataSourceService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
@@ -24,25 +24,25 @@ import org.springframework.core.io.Resource;
 
 @Slf4j
 @Configuration
-public class MysqlLoaderConfiguration {
+public class MysqlLoaderJobConfiguration {
 
     private static final Resource outputResource = new FileSystemResource("output/outputData.txt");
 
     private final JobBuilderFactory jobBuilderFactory;
     private final StepBuilderFactory stepBuilderFactory;
-    private final DataSourceRegistry dataSourceRegistry;
+    private final OriginDataSourceService originDataSourceService;
     private static final String QUERY_FORMAT = "SELECT *\n" +
             "FROM %s p\n" +
             "WHERE UNIX_TIMESTAMP(p.update_time) * 1000 >= %d\n" +
             "  AND UNIX_TIMESTAMP(p.update_time) * 1000 < %d;";
 
     @Autowired
-    public MysqlLoaderConfiguration(JobBuilderFactory jobBuilderFactory,
-                                    StepBuilderFactory stepBuilderFactory,
-                                    DataSourceRegistry dataSourceRegistry) {
+    public MysqlLoaderJobConfiguration(JobBuilderFactory jobBuilderFactory,
+                                       StepBuilderFactory stepBuilderFactory,
+                                       OriginDataSourceService originDataSourceService) {
         this.jobBuilderFactory = jobBuilderFactory;
         this.stepBuilderFactory = stepBuilderFactory;
-        this.dataSourceRegistry = dataSourceRegistry;
+        this.originDataSourceService = originDataSourceService;
     }
 
     @Bean(name = "MysqlReader")
@@ -54,7 +54,7 @@ public class MysqlLoaderConfiguration {
             @Value("#{jobParameters['tableName']}") String tableName) {
 
         JdbcCursorItemReader<JsonObject> mysqlReader = new JdbcCursorItemReader<>();
-        mysqlReader.setDataSource(dataSourceRegistry.getByName(dataSourceName));
+        mysqlReader.setDataSource(originDataSourceService.getByBeanName(dataSourceName));
         mysqlReader.setSql(String.format(QUERY_FORMAT, tableName, startTime, endTime));
         mysqlReader.setRowMapper(new MysqlRowMapper());
 

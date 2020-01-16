@@ -22,7 +22,7 @@ import org.springframework.core.io.Resource;
 
 @Slf4j
 @Configuration
-public class RestLoaderConfiguration {
+public class RestLoaderJobConfiguration {
 
     private static final Resource outputResource = new FileSystemResource("output/outputDataRest.txt");
 
@@ -30,8 +30,8 @@ public class RestLoaderConfiguration {
     private final StepBuilderFactory stepBuilderFactory;
 
     @Autowired
-    public RestLoaderConfiguration(JobBuilderFactory jobBuilderFactory,
-                                   StepBuilderFactory stepBuilderFactory) {
+    public RestLoaderJobConfiguration(JobBuilderFactory jobBuilderFactory,
+                                      StepBuilderFactory stepBuilderFactory) {
         this.jobBuilderFactory = jobBuilderFactory;
         this.stepBuilderFactory = stepBuilderFactory;
     }
