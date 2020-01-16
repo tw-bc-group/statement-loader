@@ -1,4 +1,4 @@
-package com.thoughtworks.blockchain.statementloader.loader.mysql;
+package com.thoughtworks.blockchain.statementloader.batch.mysql;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.BatchStatus;

@@ -1,4 +1,4 @@
-package com.thoughtworks.blockchain.statementloader.loader.mysql;
+package com.thoughtworks.blockchain.statementloader.batch.mysql;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;

@@ -1,4 +1,4 @@
-package com.thoughtworks.blockchain.statementloader.loader.rest;
+package com.thoughtworks.blockchain.statementloader.batch.rest;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;

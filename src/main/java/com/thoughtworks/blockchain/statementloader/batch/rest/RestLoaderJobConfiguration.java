@@ -1,7 +1,7 @@
-package com.thoughtworks.blockchain.statementloader.loader.rest;
+package com.thoughtworks.blockchain.statementloader.batch.rest;
 
 import com.google.gson.JsonObject;
-import com.thoughtworks.blockchain.statementloader.loader.mysql.JobCompletionNotificationListener;
+import com.thoughtworks.blockchain.statementloader.batch.mysql.JobCompletionNotificationListener;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;

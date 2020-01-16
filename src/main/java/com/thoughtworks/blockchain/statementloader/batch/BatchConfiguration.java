@@ -1,4 +1,4 @@
-package com.thoughtworks.blockchain.statementloader.loader;
+package com.thoughtworks.blockchain.statementloader.batch;
 
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.batch.core.repository.support.JobRepositoryFactoryBean;
