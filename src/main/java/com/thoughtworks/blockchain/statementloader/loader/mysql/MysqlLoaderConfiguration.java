@@ -5,7 +5,9 @@ import com.thoughtworks.blockchain.statementloader.datasource.DataSourceRegistry
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
-import org.springframework.batch.core.configuration.annotation.*;
+import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
+import org.springframework.batch.core.configuration.annotation.JobScope;
+import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
 import org.springframework.batch.core.launch.support.RunIdIncrementer;
 import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.ItemWriter;
@@ -15,20 +17,14 @@ import org.springframework.batch.item.file.transform.DelimitedLineAggregator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.batch.BatchDataSourceInitializer;
-import org.springframework.boot.autoconfigure.batch.BatchProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
-import org.springframework.core.io.ResourceLoader;
-
-import javax.sql.DataSource;
 
 @Slf4j
 @Configuration
-@EnableBatchProcessing
-public class MysqlLoaderConfiguration extends DefaultBatchConfigurer {
+public class MysqlLoaderConfiguration {
 
     private static final Resource outputResource = new FileSystemResource("output/outputData.txt");
 
@@ -47,18 +43,6 @@ public class MysqlLoaderConfiguration extends DefaultBatchConfigurer {
         this.jobBuilderFactory = jobBuilderFactory;
         this.stepBuilderFactory = stepBuilderFactory;
         this.dataSourceRegistry = dataSourceRegistry;
-    }
-
-    // set data source for JobRepository to record job metadata
-    @Override
-    public void setDataSource(@Qualifier("LoaderDataSource") DataSource dataSource) {
-        super.setDataSource(dataSource);
-    }
-
-    @Bean
-    public BatchDataSourceInitializer batchDataSourceInitializer(@Qualifier("LoaderDataSource") DataSource dataSource,
-                                                                 ResourceLoader resourceLoader) {
-        return new BatchDataSourceInitializer(dataSource, resourceLoader, new BatchProperties());
     }
 
     @Bean(name = "MysqlReader")
