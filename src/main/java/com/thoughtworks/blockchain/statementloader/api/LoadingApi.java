@@ -70,12 +70,12 @@ public class LoadingApi {
 
     @GetMapping("/payment")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<StreamingResponseBody> loadAccountCenterData(@RequestParam("startTime") Long startTime,
-                                                                       @RequestParam("endTime") Long endTime)
+    public ResponseEntity<StreamingResponseBody> loadPaymentData(@RequestParam("startTime") Long startTime,
+                                                                 @RequestParam("endTime") Long endTime)
             throws JobParametersInvalidException, JobExecutionAlreadyRunningException,
             JobRestartException, JobInstanceAlreadyCompleteException, FileNotFoundException {
         final JobParameters jobParameters = new JobParametersBuilder()
-                .addString("dataSourceName", "AccountCenterDataSource")
+                .addString("dataSourceName", "PaymentDataSource")
                 .addString("tableName", "payment_records")
                 .addLong("startTime", startTime)
                 .addLong("endTime", endTime)

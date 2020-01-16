@@ -8,16 +8,16 @@ import org.springframework.context.annotation.Configuration;
 import javax.sql.DataSource;
 
 @Configuration
-public class AccountCenterDataSourceConfiguration {
+public class PaymentDataSourceConfiguration {
 
     @Bean
-    @ConfigurationProperties("loader.account-center.datasource")
-    public DataSourceProperties accountCenterDataSourceProperties() {
+    @ConfigurationProperties("loader.payment.datasource")
+    public DataSourceProperties paymentDataSourceProperties() {
         return new DataSourceProperties();
     }
 
-    @Bean(name = "AccountCenterDataSource")
+    @Bean(name = "PaymentDataSource")
     public DataSource loaderDataSource() {
-        return accountCenterDataSourceProperties().initializeDataSourceBuilder().build();
+        return paymentDataSourceProperties().initializeDataSourceBuilder().build();
     }
 }

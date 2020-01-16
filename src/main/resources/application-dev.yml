@@ -20,7 +20,7 @@ spring:
 
 # for multiple data sources, different data source for different loader
 loader:
-  account-center:
+  payment:
     datasource:
       url: jdbc:mysql://localhost:3306/statement?autoReconnect=true&allowPublicKeyRetrieval=true&useSSL=false&useLegacyDatetimeCode=falseallowPublicKeyRetrieval=true
       username: root
