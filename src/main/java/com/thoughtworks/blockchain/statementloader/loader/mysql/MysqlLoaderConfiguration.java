@@ -8,6 +8,7 @@ import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.*;
 import org.springframework.batch.core.launch.support.RunIdIncrementer;
 import org.springframework.batch.item.ItemReader;
+import org.springframework.batch.item.ItemWriter;
 import org.springframework.batch.item.database.JdbcCursorItemReader;
 import org.springframework.batch.item.file.FlatFileItemWriter;
 import org.springframework.batch.item.file.transform.DelimitedLineAggregator;
@@ -27,7 +28,7 @@ import javax.sql.DataSource;
 @Slf4j
 @Configuration
 @EnableBatchProcessing
-public class BatchConfiguration extends DefaultBatchConfigurer {
+public class MysqlLoaderConfiguration extends DefaultBatchConfigurer {
 
     private static final Resource outputResource = new FileSystemResource("output/outputData.txt");
 
@@ -36,9 +37,9 @@ public class BatchConfiguration extends DefaultBatchConfigurer {
     private final DataSourceRegistry dataSourceRegistry;
 
     @Autowired
-    public BatchConfiguration(JobBuilderFactory jobBuilderFactory,
-                              StepBuilderFactory stepBuilderFactory,
-                              DataSourceRegistry dataSourceRegistry) {
+    public MysqlLoaderConfiguration(JobBuilderFactory jobBuilderFactory,
+                                    StepBuilderFactory stepBuilderFactory,
+                                    DataSourceRegistry dataSourceRegistry) {
         this.jobBuilderFactory = jobBuilderFactory;
         this.stepBuilderFactory = stepBuilderFactory;
         this.dataSourceRegistry = dataSourceRegistry;
@@ -64,8 +65,8 @@ public class BatchConfiguration extends DefaultBatchConfigurer {
             @Value("#{jobParameters['dataSourceName']}") String dataSourceName,
             @Value("#{jobParameters['tableName']}") String tableName) {
 
-        final String querySql = String.format("SELECT * FROM %s t WHERE t.timestamp >= %d AND t.timestamp < %d", tableName, startTime, endTime);
-
+//        final String querySql = String.format("SELECT * FROM %s t WHERE t.timestamp >= %d AND t.timestamp < %d", tableName, startTime, endTime);
+        final String querySql = "SELECT * FROM " + tableName;
         JdbcCursorItemReader<JsonObject> mysqlReader = new JdbcCursorItemReader<>();
         mysqlReader.setDataSource(dataSourceRegistry.getByName(dataSourceName));
         mysqlReader.setSql(querySql);
@@ -74,7 +75,7 @@ public class BatchConfiguration extends DefaultBatchConfigurer {
         return mysqlReader;
     }
 
-    @Bean
+    @Bean(name = "MysqlWriter")
     @JobScope
     public FlatFileItemWriter<JsonObject> writer() {
         final FlatFileItemWriter<JsonObject> writer = new FlatFileItemWriter<>();
@@ -83,17 +84,19 @@ public class BatchConfiguration extends DefaultBatchConfigurer {
         return writer;
     }
 
-    @Bean
-    public Step step(@Qualifier("MysqlReader") ItemReader<JsonObject> reader) {
+    @Bean(name = "MysqlStep")
+    public Step step(@Qualifier("MysqlReader") ItemReader<JsonObject> reader,
+                     @Qualifier("MysqlWriter") ItemWriter<JsonObject> writer) {
         return stepBuilderFactory.get("loadingDataStep")
                 .<JsonObject, JsonObject>chunk(5)
                 .reader(reader)
-                .writer(writer())
+                .writer(writer)
                 .build();
     }
 
-    @Bean
-    public Job job(JobCompletionNotificationListener listener, Step step) {
+    @Bean(name = "MysqlJob")
+    public Job job(JobCompletionNotificationListener listener,
+                   @Qualifier("MysqlStep") Step step) {
         return jobBuilderFactory.get("loadingDataJob")
                 .incrementer(new RunIdIncrementer())
                 .listener(listener)
