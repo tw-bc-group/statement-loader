@@ -50,12 +50,6 @@ public class RestLoaderConfiguration {
 //        return new BatchDataSourceInitializer(dataSource, resourceLoader, new BatchProperties());
 //    }
 
-    @Bean(name = "RestReader")
-    @JobScope
-    public RestJsonReader<JsonObject> restReader() {
-        return new RestJsonReader<>();
-    }
-
     @Bean(name = "RestWriter")
     @JobScope
     public FlatFileItemWriter<JsonObject> writer() {
@@ -68,7 +62,7 @@ public class RestLoaderConfiguration {
     @Bean(name = "RestStep")
     public Step step(@Qualifier("RestReader") ItemReader<JsonObject> reader,
                      @Qualifier("RestWriter") ItemWriter<JsonObject> writer) {
-        return stepBuilderFactory.get("loadingDataStep")
+        return stepBuilderFactory.get("restLoadingStep")
                 .<JsonObject, JsonObject>chunk(5)
                 .reader(reader)
                 .writer(writer)
@@ -78,7 +72,7 @@ public class RestLoaderConfiguration {
     @Bean(name = "RestJob")
     public Job job(JobCompletionNotificationListener listener,
                    @Qualifier("RestStep") Step step) {
-        return jobBuilderFactory.get("loadingDataJob")
+        return jobBuilderFactory.get("restLoadingJob")
                 .incrementer(new RunIdIncrementer())
                 .listener(listener)
                 .flow(step)

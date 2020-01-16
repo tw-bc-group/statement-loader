@@ -27,3 +27,5 @@ loader:
       password: root
       driver-class-name: com.mysql.cj.jdbc.Driver
       platform: all
+  bridge:
+    url: http://127.0.0.1:12306/bridge-records

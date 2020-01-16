@@ -89,7 +89,7 @@ public class MysqlLoaderConfiguration extends DefaultBatchConfigurer {
     @Bean(name = "MysqlStep")
     public Step step(@Qualifier("MysqlReader") ItemReader<JsonObject> reader,
                      @Qualifier("MysqlWriter") ItemWriter<JsonObject> writer) {
-        return stepBuilderFactory.get("loadingDataStep")
+        return stepBuilderFactory.get("mysqlLoadingStep")
                 .<JsonObject, JsonObject>chunk(5)
                 .reader(reader)
                 .writer(writer)
@@ -99,7 +99,7 @@ public class MysqlLoaderConfiguration extends DefaultBatchConfigurer {
     @Bean(name = "MysqlJob")
     public Job job(JobCompletionNotificationListener listener,
                    @Qualifier("MysqlStep") Step step) {
-        return jobBuilderFactory.get("loadingDataJob")
+        return jobBuilderFactory.get("mysqlLoadingJob")
                 .incrementer(new RunIdIncrementer())
                 .listener(listener)
                 .flow(step)

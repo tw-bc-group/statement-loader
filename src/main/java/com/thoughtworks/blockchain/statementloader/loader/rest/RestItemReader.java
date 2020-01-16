@@ -4,22 +4,27 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.item.ItemReader;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Arrays;
 import java.util.List;
 
 @Slf4j
-public class RestJsonReader<T> implements ItemReader<JsonObject> {
+@Component("RestReader")
+public class RestItemReader implements ItemReader<JsonObject> {
     private final String apiUrl;
     private final RestTemplate restTemplate;
 
     private int nextJasonObjectIndex;
     private List<JsonObject> jsonObjects;
 
-    public RestJsonReader() {
-        this.apiUrl = "http://127.0.0.1:12306/bridge-records";
+    @Autowired
+    public RestItemReader(@Value("${loader.bridge.url}") String apiUrl) {
+        this.apiUrl = apiUrl;
         this.restTemplate = new RestTemplate();
         nextJasonObjectIndex = 0;
     }
@@ -45,7 +50,7 @@ public class RestJsonReader<T> implements ItemReader<JsonObject> {
     }
 
     private List<JsonObject> fetchFromApi() {
-        log.info("fetching data from an external API by using the url: {}", apiUrl);
+        log.debug("fetching data from an external API by using the url: {}", apiUrl);
 
         ResponseEntity<Object[]> response = restTemplate.getForEntity(
                 apiUrl,
@@ -54,7 +59,7 @@ public class RestJsonReader<T> implements ItemReader<JsonObject> {
         final Gson gson = new Gson();
         final JsonObject[] result = gson.fromJson(gson.toJson(response.getBody()), JsonObject[].class);
 
-        log.info("Found: {}", result.length);
+        log.info("found: {}", result.length);
         return Arrays.asList(result);
     }
 }
