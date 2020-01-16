@@ -1,5 +1,5 @@
 1. 修改从API到MysqlLoader中有关AccountCenter的名字 **√**
-2. 完成MysqlLoader正确的时间处理
+2. 完成MysqlLoader正确的时间处理 **√**
 3. drop statement中有关job的表，修改配置，让job的信息只记录在loader中
 4. 抽取JobService -> 分别针对两个Bean，在REST API中注入
 5. 查看Job运行是否是异步的，考虑CompletableFuture或Await

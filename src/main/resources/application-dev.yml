@@ -22,7 +22,7 @@ spring:
 loader:
   payment:
     datasource:
-      url: jdbc:mysql://localhost:3306/statement?autoReconnect=true&allowPublicKeyRetrieval=true&useSSL=false&useLegacyDatetimeCode=falseallowPublicKeyRetrieval=true
+      url: jdbc:mysql://localhost:3306/origin_data?autoReconnect=true&allowPublicKeyRetrieval=true&useSSL=false&useLegacyDatetimeCode=falseallowPublicKeyRetrieval=true
       username: root
       password: root
       driver-class-name: com.mysql.cj.jdbc.Driver

@@ -35,6 +35,10 @@ public class MysqlLoaderConfiguration extends DefaultBatchConfigurer {
     private final JobBuilderFactory jobBuilderFactory;
     private final StepBuilderFactory stepBuilderFactory;
     private final DataSourceRegistry dataSourceRegistry;
+    private static final String QUERY_FORMAT = "SELECT *\n" +
+            "FROM %s p\n" +
+            "WHERE UNIX_TIMESTAMP(p.update_time) * 1000 >= %d\n" +
+            "  AND UNIX_TIMESTAMP(p.update_time) * 1000 < %d;";
 
     @Autowired
     public MysqlLoaderConfiguration(JobBuilderFactory jobBuilderFactory,
@@ -65,11 +69,9 @@ public class MysqlLoaderConfiguration extends DefaultBatchConfigurer {
             @Value("#{jobParameters['dataSourceName']}") String dataSourceName,
             @Value("#{jobParameters['tableName']}") String tableName) {
 
-//        final String querySql = String.format("SELECT * FROM %s t WHERE t.timestamp >= %d AND t.timestamp < %d", tableName, startTime, endTime);
-        final String querySql = "SELECT * FROM " + tableName;
         JdbcCursorItemReader<JsonObject> mysqlReader = new JdbcCursorItemReader<>();
         mysqlReader.setDataSource(dataSourceRegistry.getByName(dataSourceName));
-        mysqlReader.setSql(querySql);
+        mysqlReader.setSql(String.format(QUERY_FORMAT, tableName, startTime, endTime));
         mysqlReader.setRowMapper(new MysqlRowMapper());
 
         return mysqlReader;
