@@ -30,6 +30,8 @@ public class RestLoadingService implements LoadingService {
     @Override
     public InputStreamResource loadingData(Long startTimestamp, Long endTimestamp) {
         final JobParameters jobParameters = new JobParametersBuilder()
+                .addLong("startTimestamp", startTimestamp)
+                .addLong("endTimestamp", endTimestamp)
                 .addLong("executeTime", System.currentTimeMillis())
                 .toJobParameters();
         try {

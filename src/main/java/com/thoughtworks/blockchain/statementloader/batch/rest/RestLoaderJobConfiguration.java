@@ -48,8 +48,12 @@ public class RestLoaderJobConfiguration {
 
     @Bean(name = "RestReader")
     @JobScope
-    public RestItemReader reader(@Value("${loader.bridge.url}") String apiUrl) {
-        return new RestItemReader(apiUrl);
+    public RestItemReader reader(@Value("${loader.bridge.url}") String apiUrl,
+                                 @Value("#{jobParameters['startTimestamp']}") Long startTimestamp,
+                                 @Value("#{jobParameters['endTimestamp']}") Long endTimestamp) {
+        final RestItemReader restItemReader = new RestItemReader(apiUrl);
+        restItemReader.setTimeInterval(startTimestamp, endTimestamp);
+        return restItemReader;
     }
 
     @Bean(name = "RestStep")

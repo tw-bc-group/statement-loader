@@ -24,8 +24,11 @@ public class LoadingApi {
 
     @GetMapping("/bridge")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<StreamingResponseBody> loadBridgeData() {
-        final InputStreamResource resource = loadingServiceFactory.getByBeanName("Rest").loadingData(0L, 0L);
+    public ResponseEntity<StreamingResponseBody> loadBridgeData(@RequestParam("startTime") Long startTimestamp,
+                                                                @RequestParam("endTime") Long endTimestamp) {
+        final InputStreamResource resource = loadingServiceFactory
+                .getByBeanName("Rest")
+                .loadingData(startTimestamp, endTimestamp);
         return new ResponseEntity<>(out -> IOUtils.copy(resource.getInputStream(), out), HttpStatus.OK);
     }
 
@@ -33,7 +36,9 @@ public class LoadingApi {
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<StreamingResponseBody> loadPaymentData(@RequestParam("startTime") Long startTimestamp,
                                                                  @RequestParam("endTime") Long endTimestamp) {
-        final InputStreamResource resource = loadingServiceFactory.getByBeanName("Mysql").loadingData(startTimestamp, endTimestamp);
+        final InputStreamResource resource = loadingServiceFactory
+                .getByBeanName("Mysql")
+                .loadingData(startTimestamp, endTimestamp);
         return new ResponseEntity<>(out -> IOUtils.copy(resource.getInputStream(), out), HttpStatus.OK);
     }
 }
