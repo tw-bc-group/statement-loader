@@ -8,8 +8,8 @@
 8. 查看Reader的实现机制，修改REST reader的实现，采取分页load数据的方式
 9. 查看Job运行是否是异步的，考虑CompletableFuture或Await
 10. chunkSize配置化
-11. application的dockerfile
-12. docker-compose文件
+11. application的dockerfile   **√**
+12. docker-compose文件  **√**
     - application
     - loader-mysql
     - payment-records-mysql

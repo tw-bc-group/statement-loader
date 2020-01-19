@@ -1,0 +1,27 @@
+server:
+  port: 8081
+
+spring:
+  batch:
+    job:
+      enabled: false
+    initialize-schema: always
+  profiles: prod
+  mvc:
+    throw-exception-if-no-handler-found: true
+  datasource:
+    url: jdbc:mysql://${LOADER_DB_HOST}:${LOADER_DB_PORT}/${LOADER_DB_NAME}?autoReconnect=true&allowPublicKeyRetrieval=true&useSSL=false&useLegacyDatetimeCode=false
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+# for multiple data sources, different data source for different loader
+loader:
+  payment:
+    datasource:
+      url: jdbc:mysql://${DATASOURCE_DB_HOST}:${DATASOURCE_DB_PORT}/${DATASOURCE_DB_NAME}?autoReconnect=true&allowPublicKeyRetrieval=true&useSSL=false&useLegacyDatetimeCode=falseallowPublicKeyRetrieval=true
+      username: root
+      password: root
+      driver-class-name: com.mysql.cj.jdbc.Driver
+  bridge:
+    url: http://${MOCK_SERVER_HOST}:${MOCK_SERVER_PORT}/bridge-records

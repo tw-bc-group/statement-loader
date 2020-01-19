@@ -1,0 +1,263 @@
+[
+  {
+    "description": "mock bridge data",
+    "request": {
+      "method": "get",
+      "uri": "/bridge-records"
+    },
+    "response": {
+      "json": [
+        {
+          "coinType": "ETC",
+          "orderId": "PGW1e4a116c-accf-462e-9c85-4388a0e93620",
+          "status": "FINISHED",
+          "tip": "630",
+          "txs": [
+            {
+              "txid": "1f8b3f132af8a832e9efb4c7f0d108f5b92c121f0899266ca7fecce4e1d00617",
+              "accountBalance": "243184409809",
+              "amount": "1000",
+              "blockTime": 1576540799000,
+              "coinType": "ETC",
+              "status": "FINISHED",
+              "tip": "630",
+              "transType": "out",
+              "vout": [
+                {
+                  "address": "0xF2Bd6Bb7B22875Ac582Ec1A718F63b532045401D",
+                  "amount": "1000",
+                  "position": 0
+                }
+              ],
+              "blockHash": "000000710cb75875750b0aa6387c775b62a4d83534396b1371fc073a30effd8f",
+              "blockHeight": 316751
+            }
+          ]
+        },
+        {
+          "coinType": "DCR",
+          "orderId": "PGW14f13cd3-4ff4-48d4-9d90-cac06a7a0458",
+          "status": "FINISHED",
+          "tip": "5040",
+          "txs": [
+            {
+              "blockHash": "0xb753eb35fbf91ce042b8291becb7fbc4462c0c82c1703f7635215bee95cd4abc",
+              "blockTime": 1576540799000,
+              "coinType": "DCR",
+              "status": "SUCCEEDED",
+              "transType": "out",
+              "vout": [
+                {
+                  "amount": "1000000",
+                  "position": 0,
+                  "address": "TsmsgTSnJsrNUVXXyRJdymHGgfN61EmkmRL"
+                }
+              ],
+              "accountBalance": "6990647",
+              "amount": "1000000",
+              "txid": "0x83040d6e6d675fd4c18ede4b71adf5774dcddd3e7f132ab38d0c61e80e16fc1f",
+              "blockHeight": 9001929,
+              "tip": "5040"
+            }
+          ]
+        },
+        {
+          "coinType": "ETH",
+          "orderId": "PGWf6d33548-ba80-419f-a584-a41f49089d0f",
+          "status": "FINISHED",
+          "tip": "63000",
+          "txs": [
+            {
+              "status": "SUCCEEDED",
+              "tip": "63000",
+              "txid": "0xe73f55ac8a2e1020829470a922f337b0e18df86a6932b8033711ea336b49bd81",
+              "accountBalance": "20464779899999980000",
+              "amount": "1000000",
+              "blockHeight": 15097313,
+              "blockTime": 1576540799000,
+              "coinType": "ETH",
+              "blockHash": "0x0c9757074ff6ce7df16b859009bcc1bc16a92c5b355f8b03703847b9c389dbc8",
+              "transType": "out",
+              "vout": [
+                {
+                  "address": "0x1669BA62c45196F30afD56c493F9267FEDB02C7e",
+                  "amount": "1000000",
+                  "position": 0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "coinType": "ZEC",
+          "orderId": "PGW1c6fb79e-777a-4c13-9eb9-c3a68a2fcfdb",
+          "status": "FINISHED",
+          "tip": "488",
+          "txs": [
+            {
+              "blockHash": "0xb753eb35fbf91ce042b8291becb7fbc4462c0c82c1703f7635215bee95cd4abc",
+              "blockHeight": 9001929,
+              "blockTime": 1576540799000,
+              "coinType": "ZEC",
+              "tip": "488",
+              "transType": "out",
+              "accountBalance": "6990647",
+              "status": "SUCCEEDED",
+              "txid": "0x83040d6e6d675fd4c18ede4b71adf5774dcddd3e7f132ab38d0c61e80e16fc1f",
+              "vout": [
+                {
+                  "address": "t1a5Kh3DDpD3rC49NBafQCXKBMK7zmsqduE",
+                  "amount": "100000",
+                  "position": 0
+                }
+              ],
+              "amount": "100000"
+            }
+          ]
+        },
+        {
+          "amount": "1000000",
+          "blockTime": 1576454400000,
+          "coinType": "ZEC",
+          "status": null,
+          "tip": null,
+          "transType": "in",
+          "txid": "f79bd49510248d15830c2cd7ff4e6d26a6a0a97785bc793155f936f0c2104391",
+          "vout": [
+            {
+              "position": 0,
+              "address": "t1aqvGWLDV7QwMe69o8p16UmApV6sBojvn1",
+              "amount": "1000000"
+            }
+          ]
+        },
+        {
+          "amount": "1000000000",
+          "blockTime": 1576454400000,
+          "coinType": "BTM",
+          "status": null,
+          "tip": null,
+          "transType": "in",
+          "txid": "5c2f143930211dfba994c76d8cf005105ca423b1a41a6b1b82472d484d6f119c",
+          "vout": [
+            {
+              "address": "bm1q028sgnnwkqg3cy4ea947evkmd4pday2vh9rh24",
+              "amount": "1000000000",
+              "position": 0
+            }
+          ]
+        },
+        {
+          "coinType": "USDC",
+          "orderId": "PGW9d46c6f1-02d9-419a-bfb5-3a263867e982",
+          "status": "FINISHED",
+          "tip": "5040",
+          "txs": [
+            {
+              "accountBalance": "44595212316",
+              "amount": "100000000",
+              "blockHash": "0000000000fe9817e6ad29eaf9b3aa7dbdbfd2d4f5a36ec701a71c3691048b9c",
+              "blockHeight": 214164,
+              "blockTime": 1576540799000,
+              "transType": "out",
+              "coinType": "USDC",
+              "status": "FINISHED",
+              "tip": "5040",
+              "txid": "8ab195e0b1f403b2e9d092726e57ef59d56e1ccf55fadf8236f7976743e66f19",
+              "vout": [
+                {
+                  "address": "TsmsgTSnJsrNUVXXyRJdymHGgfN61EmkmRL",
+                  "amount": "100000000",
+                  "position": 0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "amount": "2000000",
+          "blockTime": 1576454400000,
+          "coinType": "USDC",
+          "status": "SUCCESS",
+          "tip": null,
+          "transType": "in",
+          "txid": "0xc2da8b8921fa836d76caee250fa281c54cd30644a63bec03dee34af479830405",
+          "vout": [
+            {
+              "position": 0,
+              "address": "0x5127913D3Bfc822BDcd9D825a285C5321979f02E",
+              "amount": "2000000"
+            }
+          ]
+        },
+        {
+          "amount": "30000000",
+          "blockTime": 1576454400000,
+          "coinType": "USDTERC",
+          "status": "SUCCESS",
+          "tip": null,
+          "transType": "in",
+          "txid": "0x0b77825c9602d104911ba6eb366f7cc06b3bd9d8c71745b09b2b5865665112b2",
+          "vout": [
+            {
+              "address": "0x8c189BcBDaa4489d12317e33B34602f11bc00F78",
+              "amount": "10000000",
+              "position": 0
+            },
+            {
+              "position": 1,
+              "address": "0x5127913D3Bfc822BDcd9D825a285C5321979f02E",
+              "amount": "20000000"
+            }
+          ]
+        },
+        {
+          "coinType": "LTC",
+          "orderId": "PGWb66fc67a-a7cb-4fdd-a60d-d3533f007d72",
+          "status": "FINISHED",
+          "tip": "5876",
+          "txs": [
+            {
+              "coinType": "LTC",
+              "txid": "0x83040d6e6d675fd4c18ede4b71adf5774dcddd3e7f132ab38d0c61e80e16fc1f",
+              "vout": [
+                {
+                  "address": "mg5UdWXx9ShGHv2JujMAhC5LovXZJyEYQV",
+                  "amount": "100000",
+                  "position": 0
+                }
+              ],
+              "blockHash": "0xb753eb35fbf91ce042b8291becb7fbc4462c0c82c1703f7635215bee95cd4abc",
+              "amount": "100000",
+              "blockHeight": 9001929,
+              "blockTime": 1576540799000,
+              "status": "SUCCEEDED",
+              "tip": "5876",
+              "transType": "out",
+              "accountBalance": "6990647"
+            }
+          ]
+        },
+        {
+          "amount": "10000000",
+          "blockTime": 1576454400000,
+          "coinType": "LTC",
+          "status": null,
+          "tip": null,
+          "transType": "in",
+          "txid": "07e76a98edf13d44d28178db9ae37d2675deec20b30d73688a0bc1c39b4e26a4",
+          "vout": [
+            {
+              "address": "mt4bHRh93YGPNDvxJqmWumn67SX2diQ5VP",
+              "amount": "10000000",
+              "position": 0
+            }
+          ]
+        }
+      ],
+      "headers": {
+        "Content-Type": "application/json;charset=utf-8"
+      }
+    }
+  }
+]
