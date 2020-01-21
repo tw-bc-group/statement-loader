@@ -13,5 +13,12 @@ pipeline {
         sh './gradlew build'
       }
     }
+
+    stage('Dockerize') {
+      steps {
+        sh 'make image'
+        sh 'make publish'
+      }
+    }
   }
 }
