@@ -16,6 +16,7 @@ pipeline {
 
     stage('Dockerize') {
       steps {
+        sh 'cp -r ./mock ~/data'
         sh 'make image'
         sh 'make publish'
       }
