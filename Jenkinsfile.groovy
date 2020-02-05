@@ -26,9 +26,11 @@ pipeline {
     }
 
     stage('Dockerize') {
+      agent any
       steps {
-        sh 'make image'
-        sh 'make publish'
+        sh 'docker build -t tw-blockchain/reconciliation-loader .'
+        sh 'docker image tag tw-blockchain/reconciliation-loader localhost:5000/reconciliation-loader'
+        sh 'docker push localhost:5000/reconciliation-loader'
       }
     }
   }
