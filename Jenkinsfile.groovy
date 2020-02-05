@@ -14,6 +14,12 @@ pipeline {
     }
 
     stage('Build') {
+      agent {
+        docker {
+          image 'gradle:6.0.1-jdk8'
+          args '-v /tmp/gradle-caches:/home/gradle/.gradle/caches'
+        }
+      }
       steps {
         sh './gradlew build'
       }
